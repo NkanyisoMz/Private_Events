@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get "event_attendances/destroy"
   get "users/show"
   devise_for :users
+  get "users/sign_out", to: redirect("/")
   get "events/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
