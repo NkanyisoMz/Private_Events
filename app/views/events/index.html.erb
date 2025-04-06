@@ -4,28 +4,30 @@
   <p><%= link_to "Sign in", new_user_session_path %> to create events.</p>
 <% end %>
 
-<% if event.creator == current_user %>
-  <%= link_to "Edit", edit_event_path(event) %>
-  <%= link_to "Delete", event_path(event), method: :delete, data: { confirm: "Are you sure?" } %>
-<% end %>
-
 <h1>All Events</h1>
 
 <h2>Upcoming Events</h2>
-<ul>
-  <% @upcoming_events.each do |event| %>
-    <li>
-      <%= link_to event.title, event_path(event) %> - <%= event.date %> 
-    </li>
-  <% end %>
-</ul>
+<% @upcoming_events.each do |event| %>
+  <p>
+    <%= link_to event.title, event_path(event) %> - <%= event.date.strftime("%B %d, %Y") %><br>
+    Created by: <%= event.creator.email %><br>
+
+    <% if event.creator == current_user %>
+      <%= link_to "Edit", edit_event_path(event) %>
+      <%= link_to "Delete", event_path(event), method: :delete, data: { confirm: "Are you sure?" } %>
+    <% end %>
+  </p>
+<% end %>
 
 <h2>Past Events</h2>
-<ul>
-  <% @past_events.each do |event| %>
-    <li>
-      <%= link_to event.title, event_path(event) %> - <%= event.date %> 
-    </li>
-  <% end %>
-</ul>
+<% @past_events.each do |event| %>
+  <p>
+    <%= link_to event.title, event_path(event) %> - <%= event.date.strftime("%B %d, %Y") %><br>
+    Created by: <%= event.creator.email %><br>
 
+    <% if event.creator == current_user %>
+      <%= link_to "Edit", edit_event_path(event) %>
+      <%= link_to "Delete", event_path(event), method: :delete, data: { confirm: "Are you sure?" } %>
+    <% end %>
+  </p>
+<% end %>
