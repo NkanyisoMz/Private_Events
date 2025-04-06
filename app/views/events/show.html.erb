@@ -19,6 +19,11 @@
   <%= button_to "Attend Event", event_attendances_path(event_id: @event.id), method: :post %>
 <% end %>
 
+<% if event.attendees.include?(current_user) %>
+  <%= link_to "Leave Event", unattend_event_path(event), method: :delete, data: { confirm: "Sure?" } %>
+<% end %>
+
+
 <% if event.creator == current_user %>
   <%= link_to "Edit", edit_event_path(event) %>
   <%= link_to "Delete", event_path(event), method: :delete, data: { confirm: "Are you sure?" } %>

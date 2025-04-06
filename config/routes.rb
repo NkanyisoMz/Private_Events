@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get "users/show"
   devise_for :users
   get "users/sign_out", to: redirect("/")
+  delete "events/:event_id/unattend", to: "event_attendances#destroy", as: :unattend_event
   get "events/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
