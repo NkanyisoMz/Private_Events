@@ -8,4 +8,10 @@ class EventAttendancesController < ApplicationController
     end
     redirect_to event, notice: "You are now attending this event!"
   end
+
+  def destroy
+    attendance = EventAttendance.find_by(user: current_user, event_id: params[:event_id])
+    attendance.destroy if attendance
+    redirect_to events_path, notice: "You are no longer attending this event."
+  end
 end
