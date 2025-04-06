@@ -10,6 +10,11 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+
+# Allow access only if creator or invited user
+unless @event.creator == current_user || @event.invited_users.include?(current_user)
+  redirect_to events_path, alert: "This is a private event."
+end
   end
 
   def new
@@ -23,6 +28,11 @@ class EventsController < ApplicationController
       redirect_to events_path, notice: "Event created successfully."
     else
       render :new, status: :unprocessable_entity
+    end
+    if params[:invited_user_ids]
+      params[:invited_user_ids].each do |id|
+        @event.invitations.create(user_id: id)
+      end
     end
   end
 
