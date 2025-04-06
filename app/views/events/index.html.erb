@@ -4,6 +4,11 @@
   <p><%= link_to "Sign in", new_user_session_path %> to create events.</p>
 <% end %>
 
+<% if event.creator == current_user %>
+  <%= link_to "Edit", edit_event_path(event) %>
+  <%= link_to "Delete", event_path(event), method: :delete, data: { confirm: "Are you sure?" } %>
+<% end %>
+
 <h1>All Events</h1>
 
 <h2>Upcoming Events</h2>
