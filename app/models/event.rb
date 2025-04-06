@@ -1,14 +1,9 @@
+# app/models/event.rb
 class Event < ApplicationRecord
   belongs_to :creator, class_name: "User"
   has_many :event_attendances
-  has_many :attendees, through: :event_attendances, source: :attendee
+  has_many :attendees, through: :event_attendances, source: :user
 
-  # Class methods for filtering past and upcoming events
-  def self.past
-    where("date < ?", Date.today)
-  end
-
-  def self.upcoming
-    where("date >= ?", Date.today)
-  end
+  scope :past, -> { where("date < ?", Time.now).order(date: :asc) }
+  scope :upcoming, -> { where("date >= ?", Time.now).order(date: :asc) }
 end
